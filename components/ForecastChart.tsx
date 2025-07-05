@@ -77,16 +77,6 @@ export default function ForecastChart({ data, city }: ForecastChartProps) {
     }),
     datasets: [
       {
-        label: "Historical AQI",
-        data: data.slice(0, -3).map((item) => item.aqi),
-        borderColor: "rgb(59, 130, 246)",
-        backgroundColor: "rgba(59, 130, 246, 0.1)",
-        fill: true,
-        pointBackgroundColor: "rgb(59, 130, 246)",
-        pointBorderColor: "rgb(59, 130, 246)",
-        pointRadius: 4,
-      },
-      {
         label: "Forecast",
         data: [...Array(data.length - 3).fill(null), ...data.slice(-4).map((item) => item.aqi)],
         borderColor: "rgb(16, 185, 129)",
@@ -116,7 +106,7 @@ export default function ForecastChart({ data, city }: ForecastChartProps) {
         <Line ref={chartRef} options={options} data={chartData} />
       </div>
       <div className="mt-4 text-sm text-gray-600 text-center">
-        <p>Historical data (7 days) and forecast (3 days)</p>
+        <p>Forecast (3 days)</p>
       </div>
     </div>
   )

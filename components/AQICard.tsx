@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import type { AQIData } from "../lib/api"
-import { AlertTriangle, CheckCircle, XCircle } from "lucide-react"
+import type { AQIData } from "../lib/api";
+import { AlertTriangle, CheckCircle, XCircle } from "lucide-react";
 
 interface AQICardProps {
-  data: AQIData | null
+  data: AQIData | null;
 }
 
 export default function AQICard({ data }: AQICardProps) {
@@ -15,45 +15,50 @@ export default function AQICard({ data }: AQICardProps) {
           <p>Enter a city name to check air quality</p>
         </div>
       </div>
-    )
+    );
   }
 
   const getCategoryColor = (category: string) => {
     switch (category) {
       case "Good":
-        return "bg-green-100 text-green-800 border-green-200"
+        return "bg-green-100 text-green-800 border-green-200";
       case "Moderate":
-        return "bg-yellow-100 text-yellow-800 border-yellow-200"
+        return "bg-yellow-100 text-yellow-800 border-yellow-200";
       case "Unhealthy for Sensitive Groups":
-        return "bg-orange-100 text-orange-800 border-orange-200"
+        return "bg-orange-100 text-orange-800 border-orange-200";
       case "Unhealthy":
-        return "bg-red-100 text-red-800 border-red-200"
+        return "bg-red-100 text-red-800 border-red-200";
       case "Very Unhealthy":
-        return "bg-purple-100 text-purple-800 border-purple-200"
+        return "bg-purple-100 text-purple-800 border-purple-200";
       case "Hazardous":
-        return "bg-gray-100 text-gray-800 border-gray-200"
+        return "bg-gray-100 text-gray-800 border-gray-200";
       default:
-        return "bg-gray-100 text-gray-800 border-gray-200"
+        return "bg-gray-100 text-gray-800 border-gray-200";
     }
-  }
+  };
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
       case "Good":
-        return <CheckCircle className="h-5 w-5 text-green-600" />
+        return <CheckCircle className="h-5 w-5 text-green-600" />;
       case "Moderate":
-        return <AlertTriangle className="h-5 w-5 text-yellow-600" />
+        return <AlertTriangle className="h-5 w-5 text-yellow-600" />;
       default:
-        return <XCircle className="h-5 w-5 text-red-600" />
+        return <XCircle className="h-5 w-5 text-red-600" />;
     }
-  }
+  };
+
+  // ✅ Convert WAQI UTC string to local time
+  const localTime = new Date(data.updatedAt).toLocaleString();
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800 mb-2">{data.city}</h2>
         <div
-          className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border ${getCategoryColor(data.category)}`}
+          className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border ${getCategoryColor(
+            data.category
+          )}`}
         >
           {getCategoryIcon(data.category)}
           <span className="font-semibold">{data.category}</span>
@@ -75,10 +80,14 @@ export default function AQICard({ data }: AQICardProps) {
         </div>
       </div>
 
-      <div className="bg-blue-50 rounded-lg p-4">
+      <div className="bg-blue-50 rounded-lg p-4 mb-4">
         <h3 className="font-semibold text-blue-800 mb-2">Health Advisory</h3>
         <p className="text-blue-700">{data.healthAdvice}</p>
       </div>
+
+      <div className="text-sm text-gray-500 text-center">
+        <p>Last updated: {localTime}</p>
+      </div>
     </div>
-  )
+  );
 }
